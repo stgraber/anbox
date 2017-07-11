@@ -126,15 +126,15 @@ bool anbox::cmds::ContainerManager::setup_mounts() {
   try {
     loop_device = common::LoopDeviceAllocator::new_device();
   } catch (const std::exception& e) {
-    ERROR("Could not create loopback device: %s", e.what());
+    ERROR("Could not create loop device: %s", e.what());
     return false;
   } catch (...) {
-    ERROR("Could not create loopback device");
+    ERROR("Could not create loop device");
     return false;
   }
 
   if (!loop_device->attach_file(android_img_path)) {
-    ERROR("Failed to attach Android rootfs image to loopback device");
+    ERROR("Failed to attach Android rootfs image to loop device");
     return false;
   }
 
