@@ -26,7 +26,11 @@ start() {
 	$SNAP/bin/anbox-bridge.sh start
 
 	# Ensure FUSE support for user namespaces is enabled
-	echo Y | sudo tee /sys/module/fuse/parameters/userns_mounts || echo "WARNING: kernel doesn't support fuse in user namespaces"
+	if [ -e /sys/module/fuse/parameters/userns_mounts ] && [ "$(cat /sys/module/fuse/parameters/userns_mounts)" != "Y" ]; then
+		echo Y > /sys/module/fuse/parameters/userns_mounts
+	elif [ ! -e /sys/module/fuse ]; then
+		echo "WARNING: Fuse support is not available!"
+	fi
 
 	# Only try to use AppArmor when the kernel has support for it
 	AA_EXEC="$SNAP/usr/sbin/aa-exec -p unconfined --"
