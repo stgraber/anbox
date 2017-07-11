@@ -164,11 +164,13 @@ parts:
       - pkg-config
       - protobuf-compiler
     stage-packages:
+      - fuse
       - libegl1-mesa
       - libgles2-mesa
       - libgl1-mesa-glx
       - libsdl2-2.0-0
       - libsdl2-gfx-1.0-0
+      - squashfuse
     install: |
       make test
     prime:
